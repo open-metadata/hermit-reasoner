@@ -23,14 +23,19 @@
 		without dependencies. This will also generate the JUnit reports and attempt 
 		to SCP the build results to linux.cs.ox.ac.uk. -->
 
-	<groupId>net.sourceforge.owlapi</groupId>
-	<artifactId>org.semanticweb.hermit</artifactId>
-	<version>1.4.6.519-SNAPSHOT</version>
+	<!-- OpenMetadata build: own coordinates, so that it is never mistaken for
+		the official net.sourceforge.owlapi:org.semanticweb.hermit artifact. The
+		version is the upstream master version (1.4.6.519-SNAPSHOT at commit
+		df7e00b96def27855a2665b83f1a927ddfa18b08) plus an -om.N build suffix. -->
+	<groupId>org.open-metadata</groupId>
+	<artifactId>hermit-reasoner</artifactId>
+	<version>1.4.6.519-om.1</version>
 	<packaging>bundle</packaging>
 
-	<name>HermiT</name>
-	<url>http://hermit-reasoner.com/</url>
-	<description>HermiT is reasoner for ontologies written using the Web Ontology Language (OWL). Given an OWL file, HermiT can determine whether or not the ontology is consistent, identify subsumption relationships between classes, and much more.
+	<name>HermiT (OpenMetadata build)</name>
+	<url>https://github.com/open-metadata/hermit-reasoner</url>
+	<description>OpenMetadata build of HermiT from https://github.com/owlcs/hermit-reasoner, built for Java 21 against OWL API 5.5.1. See README.md for the upstream commit and the patches applied.
+	HermiT is reasoner for ontologies written using the Web Ontology Language (OWL). Given an OWL file, HermiT can determine whether or not the ontology is consistent, identify subsumption relationships between classes, and much more.
 	This is the maven build of HermiT and is designed for people who wish to use HermiT from within the OWL API. It is now versioned in the main HermiT version repository, although not officially supported by the HermiT developers.
 	The version number of this package is a composite of the HermiT version and a value representing the OWLAPI release it is compatible with. Note that the group id for the upstream HermiT is com.hermit-reasoner, while this fork is released under net.sourceforge.owlapi.
 	This fork exists to allow HermiT users to use newer OWLAPI versions than the ones supported by the original HermiT codebase.
@@ -334,9 +339,9 @@
 
 
 	<scm>
-		<connection>scm:git:git@github.com:phillord/hermit-reasoner.git</connection>
-		<developerConnection>scm:git:git@github.com:phillord/hermit-reasoner.git</developerConnection>
-		<url>git@github.com:phillord/hermit-reasoner.git</url>
+		<connection>scm:git:https://github.com/open-metadata/hermit-reasoner.git</connection>
+		<developerConnection>scm:git:git@github.com:open-metadata/hermit-reasoner.git</developerConnection>
+		<url>https://github.com/open-metadata/hermit-reasoner</url>
 	</scm>
 
 </project>
