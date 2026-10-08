@@ -125,6 +125,15 @@ public class DatatypesTest extends AbstractReasonerTest {
         assertFalse(m_reasoner.getSubDataProperties(dp, false).containsEntity(dp2));
     }
 
+    public void testIntersectionOfTopDatatypes() throws Exception {
+        String axioms = "Declaration(Class(:A)) Declaration(Class(:B)) Declaration(DataProperty(:dp))"
+                + "SubClassOf(:A DataSomeValuesFrom(:dp DataIntersectionOf(rdfs:Literal rdfs:Literal)))"
+                + "SubClassOf(:B DataSomeValuesFrom(:dp DataComplementOf(DataIntersectionOf(rdfs:Literal rdfs:Literal))))";
+        loadReasonerWithAxioms(axioms);
+        assertSatisfiable(NS_C("A"), true);
+        assertSatisfiable(NS_C("B"), false);
+    }
+
     public void testParsingError() throws Exception {
         String axioms = "Declaration(NamedIndividual(:a)) Declaration(Class(:A)) Declaration(DataProperty(:dp)) SubClassOf(:A DataAllValuesFrom(:dp DataOneOf(\"3\"^^xsd:integer \"4a\"^^xsd:int))) "
                 + "SubClassOf(:A DataAllValuesFrom(:dp DataOneOf(\"2\"^^xsd:short \"3\"^^xsd:integer)))"

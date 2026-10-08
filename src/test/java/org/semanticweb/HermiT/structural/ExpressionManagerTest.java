@@ -41,4 +41,11 @@ public class ExpressionManagerTest extends AbstractOntologyTest {
         assertEquals(cls,expressionManager.getSimplified(
             m_dataFactory.getOWLObjectIntersectionOf(cls,m_dataFactory.getOWLThing())));
     }
+
+    public void testEmptyDataIntersectionSimplifiesToTopDatatype() {
+        assertEquals(m_dataFactory.getTopDatatype(),expressionManager.getSimplified(
+            m_dataFactory.getOWLDataIntersectionOf(
+                m_dataFactory.getTopDatatype(),
+                m_dataFactory.getOWLDataIntersectionOf(m_dataFactory.getTopDatatype(),m_dataFactory.getTopDatatype()))));
+    }
 }
