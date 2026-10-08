@@ -75,4 +75,6 @@ running time varies between runs.
 
 Pushing a tag `v<version>` (for example `v1.4.6.519-om.1`, matching the POM
 version) builds and tests the tag and publishes a GitHub Release with the
-jar, the sources jar and `SHA256SUMS`.
+jar, the sources jar, the POM and `SHA256SUMS`. The POM carries the
+dependencies; install a release into a local Maven repository with
+`mvn install:install-file -Dfile=hermit-reasoner-<version>.jar -DpomFile=hermit-reasoner-<version>.pom`.
