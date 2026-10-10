@@ -314,8 +314,12 @@ public class OWLLinkTest extends AbstractReasonerTest {
         // non-determinism).
 
         // "1b", "2b" removed because HermiT has timeouts
+        // "11" removed because its empty owl:unionOf, owl:intersectionOf and
+        // owl:oneOf lists are OWL 1 syntax that OWL 2 does not allow; the
+        // OWL API 5.5 RDF/XML parser throws "operands cannot be null or empty"
+        // before HermiT sees the ontology.
 
-        String[] tests = new String[] { "1a", "2a", "2c", "3a", "3b", "4", "5", "6", "7", "8", "9", "10a", "10b", "11",
+        String[] tests = new String[] { "1a", "2a", "2c", "3a", "3b", "4", "5", "6", "7", "8", "9", "10a", "10b",
                 "13", "14", "15", "16", "17", "18", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29a" };
 
         for (String testName : tests) {

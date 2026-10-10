@@ -37,11 +37,20 @@ public class WGTestRegistry {
     protected final List<WGTestDescriptor> m_testDescriptors;
 
     public WGTestRegistry() throws Exception {
+        this("ontologies/all.rdf");
+    }
+
+    /**
+     * @param testCasesResource
+     *            test case export in the OWL 2 test ontology format, as a
+     *            resource relative to this class
+     */
+    public WGTestRegistry(String testCasesResource) throws Exception {
         m_ontologyManager = OWLManager.createOWLOntologyManager();
         m_ontologyManager.loadOntologyFromOntologyDocument(
                 IRI.create(WGTestRegistry.class.getResource("ontologies/test-ontology.owl").toURI()));
         m_testContainer = m_ontologyManager.loadOntologyFromOntologyDocument(
-                IRI.create(WGTestRegistry.class.getResource("ontologies/all.rdf").toURI()));
+                IRI.create(WGTestRegistry.class.getResource(testCasesResource).toURI()));
         m_testDescriptors = new ArrayList<>();
         OWLClass testCaseClass = m_ontologyManager.getOWLDataFactory().getOWLClass(IRI.create(URI_BASE + "TestCase"));
         m_testContainer.classAssertionAxioms(testCaseClass).forEach(ax->

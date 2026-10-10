@@ -1,0 +1,2 @@
+# The pinned W3C test cases are checked by SHA-256 and must stay byte-for-byte identical.
+src/test/resources/org/semanticweb/HermiT/owl_wg_tests/w3c/*.rdf -text

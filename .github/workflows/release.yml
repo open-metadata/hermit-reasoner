@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - run: mvn -B -ntp verify
+
+      - name: Publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          cd target
+          jar="hermit-reasoner-${version}.jar"
+          sources="hermit-reasoner-${version}-sources.jar"
+          if [ ! -f "$jar" ] || [ ! -f "$sources" ]; then
+            echo "Tag $TAG does not match the POM version: $jar or $sources was not built" >&2
+            ls -l ./*.jar >&2
+            exit 1
+          fi
+          # The POM carries the dependencies, for mvn install:install-file -DpomFile=...
+          pom="hermit-reasoner-${version}.pom"
+          cp ../pom.xml "$pom"
+          sha256sum "$jar" "$sources" "$pom" > SHA256SUMS
+          cat SHA256SUMS
+          gh release create "$TAG" "$jar" "$sources" "$pom" SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "HermiT $version (OpenMetadata build)" \
+            --notes "OpenMetadata build of HermiT $version, built and tested with JDK 21 from commit $GITHUB_SHA. See README.md for the upstream commit, the patches and the test results. Verify downloads with SHA256SUMS."

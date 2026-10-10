@@ -18,14 +18,14 @@ public class NormalizationTest extends AbstractStructuralTest {
         assertNormalization(
                 "Declaration(Class(:Eighteen)) Declaration(DataProperty(:hasAge)) SubClassOf(:Eighteen DataHasValue(:hasAge \"18\"^^xsd:integer))",
                 "SubClassOf(owl:Thing ObjectUnionOf(ObjectComplementOf(<" + NS + "Eighteen>) DataSomeValuesFrom(<" + NS
-                        + "hasAge> DataOneOf(\"18\"^^xsd:integer ))))");
+                        + "hasAge> DataOneOf(\"18\"^^xsd:integer))))");
     }
 
     public void testDataPropertiesHasValue2() throws Exception {
         assertNormalization(
                 "Declaration(Class(:Eighteen)) Declaration(DataProperty(:hasAge)) SubClassOf(DataHasValue(:hasAge \"18\"^^xsd:integer) :Eighteen)",
                 "SubClassOf(owl:Thing ObjectUnionOf(<" + NS + "Eighteen> DataAllValuesFrom(<" + NS
-                        + "hasAge> DataComplementOf(DataOneOf(\"18\"^^xsd:integer )))))");
+                        + "hasAge> DataComplementOf(DataOneOf(\"18\"^^xsd:integer)))))");
     }
 
     public void testDataPropertiesAll1() throws Exception {
@@ -60,21 +60,21 @@ public class NormalizationTest extends AbstractStructuralTest {
         assertNormalization(
                 "Declaration(Class(:A)) Declaration(DataProperty(:dp)) SubClassOf(:A DataAllValuesFrom(:dp DataOneOf(\"Peter\"^^xsd:string \"19\"^^xsd:integer)))",
                 "SubClassOf(owl:Thing ObjectUnionOf(ObjectComplementOf(<" + NS + "A>) DataAllValuesFrom(<" + NS
-                        + "dp> DataOneOf(\"19\"^^xsd:integer \"Peter\"^^xsd:string ))))");
+                        + "dp> DataOneOf(\"19\"^^xsd:integer \"Peter\"^^xsd:string))))");
     }
 
     public void testDataPropertiesDataOneOf2() throws Exception {
         assertNormalization(
                 "Declaration(Class(:A)) Declaration(DataProperty(:dp)) SubClassOf(DataAllValuesFrom(:dp DataOneOf(\"18\"^^xsd:integer \"19\"^^xsd:integer)) :A)",
                 "SubClassOf(owl:Thing ObjectUnionOf(<" + NS + "A> DataSomeValuesFrom(<" + NS
-                        + "dp> DataComplementOf(DataOneOf(\"18\"^^xsd:integer \"19\"^^xsd:integer )))))");
+                        + "dp> DataComplementOf(DataOneOf(\"18\"^^xsd:integer \"19\"^^xsd:integer)))))");
     }
 
     public void testDataPropertiesDataComplementOf1() throws Exception {
         assertNormalization(
                 "SubClassOf(:A DataAllValuesFrom(:dp DataComplementOf(DataComplementOf(DataOneOf(\"18\"^^xsd:integer \"19\"^^xsd:integer)))))",
                 "SubClassOf(owl:Thing ObjectUnionOf(ObjectComplementOf(<" + NS + "A>) DataAllValuesFrom(<" + NS
-                        + "dp> DataOneOf(\"18\"^^xsd:integer \"19\"^^xsd:integer ))))");
+                        + "dp> DataOneOf(\"18\"^^xsd:integer \"19\"^^xsd:integer))))");
     }
 
     public void testDataPropertiesMax1() throws Exception {
@@ -163,7 +163,7 @@ public class NormalizationTest extends AbstractStructuralTest {
     }
 
     public void testKeys1() throws Exception {
-        assertNormalization("HasKey(:C (:r) (:dp))", "HasKey(<" + NS + "C> (<" + NS + "r> ) (<" + NS + "dp> ))");
+        assertNormalization("HasKey(:C (:r) (:dp))", "HasKey(<" + NS + "C> (<" + NS + "r>) (<" + NS + "dp>))");
     }
 
     public void testKeys2() throws Exception {
@@ -172,11 +172,11 @@ public class NormalizationTest extends AbstractStructuralTest {
         Set<String> control1 = new TreeSet<>();
         control1.add("SubClassOf(owl:Thing ObjectUnionOf(<" + NS + "A> ObjectComplementOf(<internal:def#a0>)))");
         control1.add("SubClassOf(owl:Thing ObjectUnionOf(<" + NS + "B> ObjectComplementOf(<internal:def#a0>)))");
-        control1.add("HasKey(<internal:def#a0> (<" + NS + "r> ) (<file:/c/test.owl#dp> ))");
+        control1.add("HasKey(<internal:def#a0> (<" + NS + "r>) (<file:/c/test.owl#dp>))");
         Set<String> control2 = new HashSet<>();
         control2.add("SubClassOf(owl:Thing ObjectUnionOf(<" + NS + "B> ObjectComplementOf(<internal:def#a0>)))");
         control2.add("SubClassOf(owl:Thing ObjectUnionOf(<" + NS + "A> ObjectComplementOf(<internal:def#a0>)))");
-        control2.add("HasKey(<internal:def#a0> (<" + NS + "r> ) (<file:/c/test.owl#dp> ))");
+        control2.add("HasKey(<internal:def#a0> (<" + NS + "r>) (<file:/c/test.owl#dp>))");
         if (!normalizedAxiomsStrings.equals(control1) && !normalizedAxiomsStrings.equals(control2))
             if(!normalizedAxiomsStrings.equals(control1)) {
                 assertEquals( control1.stream().collect(Collectors.joining("\n")),normalizedAxiomsStrings.stream().collect(Collectors.joining("\n")));

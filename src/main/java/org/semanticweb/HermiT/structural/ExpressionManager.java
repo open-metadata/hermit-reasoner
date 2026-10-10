@@ -654,6 +654,8 @@ public class ExpressionManager {
                 else
                     newConjuncts.add(drSimplified);
             }
+            if (newConjuncts.isEmpty())
+                return m_factory.getTopDatatype();
             return m_factory.getOWLDataIntersectionOf(newConjuncts);
         }
         @Override
